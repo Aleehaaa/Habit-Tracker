@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Habit Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #4169ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #4169ff;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-signin {
+            background-color: transparent;
+            color: #333;
+        }
+
+        .btn-signin:hover {
+            background-color: #f0f0f0;
+        }
+
+        .btn-signup {
+            background-color: #4169ff;
+            color: white;
+        }
+
+        .btn-signup:hover {
+            background-color: #3155e6;
+            transform: translateY(-2px);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #1938eb 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .story-section {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .story-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .story-image {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .story-content h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #000;
+        }
+
+        .story-content p {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .mission-section {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .mission-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .mission-container h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .mission-container > p {
+            font-size: 18px;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            line-height: 1.7;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .value-card {
+            background: white;
+            padding: 40px 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .value-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .value-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #000;
+        }
+
+        .value-card p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #666;
+        }
+
+        .stats-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #2d0a96 100%);
+            color: white;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .stat-item p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .team-section {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .team-container h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .team-container > p {
+            font-size: 18px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .member-photo {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .member-photo:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .member-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 4px;
+        }
+
+        .member-role {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .cta-section {
+            padding: 100px 20px;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-container h2 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .cta-container p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            background-color: #4169ff;
+            color: white;
+            padding: 18px 48px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #3155e6;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(65, 105, 255, 0.3);
+        }
+
+        .footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 60px 20px 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 60px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #333;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 16px;
+            color: #f0f0f0;
+    
+        }
+       
+
+        .footer-tagline {
+            color: #ccc9c9;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: #4169ff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 1024px) {
+            .story-container {
+                grid-template-columns: 1fr;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-links {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">h</div>
+            <span >Habit Tracker</span>
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="#"></a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+            <li><a href="#"></a></li>
+        </ul>
+        
+        <div class="nav-buttons">
+            <button class="btn btn-signin" onclick="location.href='allhabits.html'">Sign In</button>
+            <button class="btn btn-signup"  onclick="location.href='allhabits.html'">Sign Up</button>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Empowering Millions to Build Better Habits</h1>
+            <p>We believe that small, consistent actions lead to remarkable transformations. Our mission is to make habit-building simple, effective, and accessible to everyone.</p>
+        </div>
+    </section>
+
+    <section class="story-section">
+        <div class="story-container">
+            <div class="story-image">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop" alt="Team collaboration">
+            </div>
+            <div class="story-content">
+                <h2>Our Story</h2>
+                <p>Habitify was born from a simple observation: most people struggle not because they lack motivation, but because they lack the right tools to track and maintain their habits.</p>
+                <p>In 2018, our founders experienced firsthand the challenges of building consistent routines while juggling busy professional and personal lives. Frustrated by complicated apps and overwhelming systems, they set out to create something different.</p>
+                <p>Today, Habitify serves over 2 million users worldwide, helping them transform their lives one habit at a time. Our app has been featured as App of the Day on the Apple App Store and has received recognition from productivity experts globally.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mission-section">
+        <div class="mission-container">
+            <h2>Our Mission & Values</h2>
+            <p>We're driven by the belief that everyone deserves the tools and support to become the best version of themselves.</p>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>Simplicity First</h3>
+                    <p>We believe powerful tools don't need to be complicated. Our interface is designed to be intuitive and distraction-free.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🔒</div>
+                    <h3>Privacy Matters</h3>
+                    <p>Your personal data is yours. We employ industry-leading security measures to protect your information.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">📊</div>
+                    <h3>Data-Driven</h3>
+                    <p>Every feature we build is backed by behavioral science and validated through user feedback.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Community Support</h3>
+                    <p>We foster a supportive community where users can motivate each other and celebrate wins together.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🚀</div>
+                    <h3>Continuous Innovation</h3>
+                    <p>We're constantly evolving, adding new features and improving based on what our users need.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🌍</div>
+                    <h3>Global Accessibility</h3>
+                    <p>Available in 20+ languages, we're committed to making habit-building accessible worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>2M+</h3>
+                    <p>Active Users</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50M+</h3>
+                    <p>Habits Tracked</p>
+                </div>
+                <div class="stat-item">
+                    <h3>150+</h3>
+                    <p>Countries</p>
+                </div>
+                <div class="stat-item">
+                    <h3>4.8★</h3>
+                    <p>App Store Rating</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>Join Our Community</h2>
+            <p>Start your journey towards better habits today. Join millions of users who are already transforming their lives with Habitify.</p>
+            <button class="cta-button" onclick="location.href='login.html'">Get Started for Free</button>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">h</div>
+                        <span>Habit Tracker</span>
+                    </a>
+                    <p class="footer-tagline">Build Better Habits, Build a Better Life</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="allhabits.html">Try for free</a>
+                        <a href="blog.html">Blog</a>
+                        <a href="#"></a>
+                        <a href="#"></a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="aboutus.html">About Us</a>
+                        <a href="blog.html">Blog</a>
+                        <a href="#"></a>
+                        <a href="contactus.html">Contact Us</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="contactus.html">Contact Us</a>
+                        <a href="#"></a>
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="termsofservice.html">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Habit Tracker. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background: linear-gradient(to bottom, #eff6ff 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        header .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        header h1 {
+            font-size: 56px;
+            margin-bottom: 16px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header p {
+            font-size: 20px;
+            opacity: 0.95;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: -60px auto 60px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.15);
+            margin-bottom: 50px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .search-bar {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 16px 24px 16px 56px;
+            border: 2px solid #e0e7ff;
+            border-radius: 12px;
+            outline: none;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+
+        .search-bar input:focus {
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-results-count {
+            text-align: center;
+            margin-top: 16px;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .clear-search {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #e0e7ff;
+            color: #3b82f6;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .clear-search:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .clear-search.visible {
+            display: flex;
+        }
+
+        /* Featured Post */
+        .featured-post {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.15);
+            margin-bottom: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            transition: all 0.3s;
+        }
+
+        .featured-post:hover {
+            box-shadow: 0 25px 70px rgba(59, 130, 246, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .featured-image {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .featured-content {
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            width: fit-content;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3);
+        }
+
+        .featured-content h2 {
+            font-size: 32px;
+            margin-bottom: 16px;
+            color: #0f172a;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .featured-content .meta {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .featured-content p {
+            color: #475569;
+            margin-bottom: 28px;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: fit-content;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .read-more:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-btn {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #e0e7ff;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #475569;
+            transition: all 0.3s;
+            font-size: 14px;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.08);
+        }
+
+        .category-btn:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border-color: #3b82f6;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(59, 130, 246, 0.08);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .blog-card.highlight {
+            animation: highlightPulse 1s ease-in-out;
+        }
+
+        @keyframes highlightPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3); }
+        }
+
+        .blog-image {
+            height: 220px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 64px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.1) 100%);
+        }
+
+        .blog-content {
+            padding: 28px;
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-content h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #0f172a;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .blog-content .meta {
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 14px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .blog-content p {
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        mark {
+            background: #fef08a;
+            color: #854d0e;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        footer p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 36px;
+            }
+
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-content {
+                padding: 30px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-section {
+                padding: 24px;
+            }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 80px 20px;
+            color: #64748b;
+        }
+
+        .no-results h3 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: #1e293b;
+        }
+
+        .no-results p {
+            margin-bottom: 20px;
+        }
+
+        .no-results button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="content">
+            <h1>🎯 Habit Tracker Blog</h1>
+            <p>Building better habits, one day at a time</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Search for habits, tips, and inspiration..."
+                    autocomplete="off"
+                >
+                <button class="clear-search" id="clearSearch" onclick="clearSearch()">✕</button>
+            </div>
+            <div class="search-results-count" id="resultsCount"></div>
+        </div>
+
+        <!-- Featured Post -->
+        <div class="featured-post" id="featuredPost">
+            <div class="featured-image">🔥</div>
+            <div class="featured-content">
+                <span class="featured-badge">⭐ 30 DAY STREAK</span>
+                <h2>My 30-Day Morning Routine Challenge</h2>
+                <div class="meta">
+                    <span>📅 Published Today</span>
+                    <span>⏱️ 6 min read</span>
+                </div>
+                <p>I successfully completed my 30-day morning routine challenge! Here's everything I learned about waking up at 5 AM, meditation, and starting the day with intention. The transformation has been incredible.</p>
+                <a href="#" class="read-more">Read Full Story →</a>
+            </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="category-filter">
+            <button class="category-btn active" onclick="filterPosts('all')">All Habits</button>
+            <button class="category-btn" onclick="filterPosts('Health')">Health</button>
+            <button class="category-btn" onclick="filterPosts('Productivity')">Productivity</button>
+            <button class="category-btn" onclick="filterPosts('Mindfulness')">Mindfulness</button>
+            <button class="category-btn" onclick="filterPosts('Learning')">Learning</button>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="blog-grid" id="blogGrid"></div>
+        
+        <div class="no-results" id="noResults" style="display: none;">
+            <h3>🔍 No posts found</h3>
+            <p>Try a different search term or category</p>
+            <button onclick="clearSearch()">Clear Search</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 My Habit Tracker Journey. Keep building, keep growing! 💪</p>
+    </footer>
+
+    <script>
+        const blogPosts = [
+            {
+                id: 1,
+                title: "Why I Started Tracking My Water Intake",
+                category: "Health",
+                date: "Dec 5, 2024",
+                readTime: "3 min",
+                icon: "💧",
+                excerpt: "Drinking 8 glasses of water daily seemed impossible until I started tracking it. Here's how this simple habit transformed my energy levels and overall health."
+            },
+            {
+                id: 2,
+                title: "The Pomodoro Technique Changed My Work Life",
+                category: "Productivity",
+                date: "Dec 3, 2024",
+                readTime: "5 min",
+                icon: "⏱️",
+                excerpt: "Working in 25-minute focused bursts has doubled my productivity. Learn how I use the Pomodoro Technique to accomplish more while avoiding burnout."
+            },
+            {
+                id: 3,
+                title: "My Daily 10-Minute Meditation Practice",
+                category: "Mindfulness",
+                date: "Dec 1, 2024",
+                readTime: "4 min",
+                icon: "🧘",
+                excerpt: "Starting with just 10 minutes of meditation each morning has reduced my anxiety and improved my focus. Here's my journey from skeptic to believer."
+            },
+            {
+                id: 4,
+                title: "Reading 20 Pages Every Day for 60 Days",
+                category: "Learning",
+                date: "Nov 28, 2024",
+                readTime: "6 min",
+                icon: "📚",
+                excerpt: "I committed to reading 20 pages daily and finished 5 books in two months. Discover the books that changed my perspective and how I built this habit."
+            },
+            {
+                id: 5,
+                title: "Evening Workout Routine: 45 Days Strong",
+                category: "Health",
+                date: "Nov 25, 2024",
+                readTime: "5 min",
+                icon: "💪",
+                excerpt: "From couch potato to consistent evening workouts. I share my simple 30-minute routine that fits into even the busiest schedule."
+            },
+            {
+                id: 6,
+                title: "Journaling: My Secret to Mental Clarity",
+                category: "Mindfulness",
+                date: "Nov 22, 2024",
+                readTime: "4 min",
+                icon: "📝",
+                excerpt: "Three pages every morning has become my therapy. Explore how journaling helped me process emotions and set clear intentions for each day."
+            },
+            {
+                id: 7,
+                title: "No Phone First Hour: Life-Changing Habit",
+                category: "Productivity",
+                date: "Nov 20, 2024",
+                readTime: "4 min",
+                icon: "📱",
+                excerpt: "I stopped checking my phone for the first hour after waking up. The mental peace and morning productivity gains have been remarkable."
+            },
+            {
+                id: 8,
+                title: "Learning Spanish: 15 Minutes Daily Progress",
+                category: "Learning",
+                date: "Nov 18, 2024",
+                readTime: "5 min",
+                icon: "🌍",
+                excerpt: "Using Duolingo for just 15 minutes each day has helped me maintain a 90-day streak. Here's what I've learned about language acquisition."
+            },
+            {
+                id: 9,
+                title: "Meal Prep Sundays: Eating Healthy Made Easy",
+                category: "Health",
+                date: "Nov 15, 2024",
+                readTime: "7 min",
+                icon: "🥗",
+                excerpt: "Spending 2 hours on Sunday preparing meals for the week has saved me time, money, and helped me stick to my nutrition goals."
+            },
+            {
+                id: 10,
+                title: "Gratitude Practice: Finding Joy Daily",
+                category: "Mindfulness",
+                date: "Nov 12, 2024",
+                readTime: "3 min",
+                icon: "🙏",
+                excerpt: "Writing down three things I'm grateful for each night has shifted my perspective from scarcity to abundance. Simple but powerful."
+            },
+            {
+                id: 11,
+                title: "Cold Showers: 30 Days of Discomfort",
+                category: "Health",
+                date: "Nov 10, 2024",
+                readTime: "5 min",
+                icon: "🚿",
+                excerpt: "I took cold showers for 30 days straight. The physical and mental benefits surprised me, but it wasn't easy. Here's my honest experience."
+            },
+            {
+                id: 12,
+                title: "Time Blocking: Managing My Calendar Better",
+                category: "Productivity",
+                date: "Nov 8, 2024",
+                readTime: "6 min",
+                icon: "📅",
+                excerpt: "Scheduling every hour of my day seemed rigid at first, but time blocking has given me more freedom and reduced decision fatigue significantly."
+            }
+        ];
+
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        function highlightText(text, search) {
+            if (!search) return text;
+            const regex = new RegExp(`(${search})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+
+        function renderPosts(posts) {
+            const blogGrid = document.getElementById('blogGrid');
+            const noResults = document.getElementById('noResults');
+            const featuredPost = document.getElementById('featuredPost');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            // Show/hide featured post based on search
+            if (currentSearch) {
+                featuredPost.style.display = 'none';
+            } else {
+                featuredPost.style.display = 'grid';
+            }
+            
+            if (posts.length === 0) {
+                blogGrid.style.display = 'none';
+                noResults.style.display = 'block';
+                resultsCount.textContent = 'No results found';
+                return;
+            }
+            
+            blogGrid.style.display = 'grid';
+            noResults.style.display = 'none';
+            
+            // Update results count
+            if (currentSearch || currentFilter !== 'all') {
+                resultsCount.textContent = `Found ${posts.length} post${posts.length !== 1 ? 's' : ''}`;
+            } else {
+                resultsCount.textContent = '';
+            }
+            
+            blogGrid.innerHTML = posts.map(post => `
+                <div class="blog-card ${currentSearch ? 'highlight' : ''}" onclick="viewPost(${post.id})">
+                    <div class="blog-image">${post.icon}</div>
+                    <div class="blog-content">
+                        <span class="blog-category">${highlightText(post.category, currentSearch)}</span>
+                        <h3>${highlightText(post.title, currentSearch)}</h3>
+                        <div class="meta">
+                            <span>📅 ${post.date}</span>
+                            <span>⏱️ ${post.readTime}</span>
+                        </div>
+                        <p>${highlightText(post.excerpt, currentSearch)}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterPosts(category) {
+            currentFilter = category;
+            
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            applyFilters();
+        }
+
+        function applyFilters() {
+            let filtered = blogPosts;
+            
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(post => post.category === currentFilter);
+            }
+            
+            if (currentSearch) {
+                filtered = filtered.filter(post => 
+                    post.title.toLowerCase().includes(currentSearch) ||
+                    post.excerpt.toLowerCase().includes(currentSearch) ||
+                    post.category.toLowerCase().includes(currentSearch)
+                );
+            }
+            
+            renderPosts(filtered);
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            currentSearch = '';
+            document.getElementById('clearSearch').classList.remove('visible');
+            applyFilters();
+        }
+
+        function viewPost(id) {
+            const post = blogPosts.find(p => p.id === id);
+            alert(`Opening: ${post.title}\n\n${post.excerpt}\n\nIn a full version, this would show the complete article with detailed progress tracking, charts, and insights!`);
+        }
+
+        // Real-time search as user types
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            currentSearch = e.target.value.toLowerCase().trim();
+            
+            // Show/hide clear button
+            const clearBtn = document.getElementById('clearSearch');
+            if (currentSearch) {
+                clearBtn.classList.add('visible');
+            } else {
+                clearBtn.classList.remove('visible');
+            }
+            
+            applyFilters();
+        });
+
+        // Initial render
+        renderPosts(blogPosts);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker - Build Better Habits</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #4169ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #4169ff;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            
+        }
+
+        .btn-signin {
+            background-color: rgb(254, 250, 250);
+            color: #333;
+        }
+
+        .btn-signin:hover {
+            background-color: #f0f0f0;
+        }
+
+        .btn-signup {
+            background-color: #4169ff;
+            color: white;
+        }
+
+        .btn-signup:hover {
+            background-color: #3155e6;
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            color: #000;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #555;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+
+        .cta-button {
+            background-color: #4169ff;
+            color: white;
+            padding: 18px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #3155e6;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(65, 105, 255, 0.3);
+        }
+
+        .schedule-section {
+            padding: 80px 20px;
+            background-color: #ffffff;
+        }
+
+        .schedule-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .schedule-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .check-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .schedule-description {
+            font-size: 16px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .time-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .time-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            color: white;
+        }
+
+        .time-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .morning .time-header {
+            background-color: #1e90ff;
+        }
+
+        .noon .time-header {
+            background-color: #ff6b35;
+        }
+
+        .night .time-header {
+            background-color: #a855f7;
+        }
+
+        .habit-card {
+            background-color: #ffffff;
+            padding: 16px 20px;
+            border-radius: 10px;
+            border: 2px solid #e5e5e5;
+            transition: all 0.3s;
+        }
+
+        .habit-card:hover {
+            border-color: #4169ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .morning .habit-card {
+            border-color: #b3d9ff;
+        }
+
+        .noon .habit-card {
+            border-color: #ffc4ad;
+        }
+
+        .night .habit-card {
+            border-color: #e0c7ff;
+        }
+
+        .habit-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #000;
+            margin-bottom: 4px;
+        }
+
+        .habit-time {
+            font-size: 13px;
+            color: #888;
+        }
+
+        @media (max-width: 1024px) {
+            .schedule-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            h1 {
+                font-size: 48px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            h2 {
+                font-size: 28px;
+            }
+
+            .schedule-section {
+                padding: 60px 20px;
+            }
+        }
+
+        .progress-section {
+            padding: 80px 20px;
+            background-color: #f8f9fa;
+        }
+
+        .progress-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .progress-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .progress-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+        }
+
+        .progress-description {
+            font-size: 16px;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .day-label {
+            font-size: 11px;
+            color: #999;
+            text-align: center;
+            font-weight: 600;
+            padding: 4px 0;
+        }
+
+        .day-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #666;
+            background: #f5f5f5;
+        }
+
+        .day-cell.empty {
+            background: transparent;
+        }
+
+        .day-cell.active {
+            background: #4169ff;
+            color: white;
+            font-weight: 600;
+        }
+
+        .streaks-card .streak-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .streak-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .streak-date {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .streak-bar {
+            background: #4169ff;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .streak-long {
+            width: 100%;
+        }
+
+        .streak-medium {
+            width: 60%;
+        }
+
+        .streak-short {
+            width: 30%;
+        }
+
+        .heatmap {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .heatmap-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .month-label {
+            font-size: 11px;
+            color: #999;
+            font-weight: 600;
+            width: 35px;
+        }
+
+        .heatmap-cells {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .heat-cell {
+            width: 18px;
+            height: 18px;
+            background: #e8e8e8;
+            border-radius: 3px;
+        }
+
+        .heat-cell.active {
+            background: #4169ff;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .chart-label {
+            font-size: 11px;
+            color: #999;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .chart-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .chart-unit {
+            font-size: 20px;
+            color: #999;
+        }
+
+        .chart-increase {
+            background: #e8f5e9;
+            color: #4caf50;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .bar-chart {
+            position: relative;
+            height: 200px;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 180px;
+            gap: 8px;
+            padding: 0 4px;
+        }
+
+        .bar {
+            flex: 1;
+            background: #4169ff;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s;
+        }
+
+        .bar:hover {
+            opacity: 0.8;
+        }
+
+        .chart-baseline {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-top: 2px dashed #ff9999;
+        }
+
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            padding: 0 4px;
+        }
+
+        .chart-labels span {
+            font-size: 11px;
+            color: #999;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .challenges-section {
+            padding: 80px 20px;
+            background-color: #ffffff;
+        }
+
+        .challenges-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .challenges-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .user-avatars {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin-left: -15px;
+        }
+
+        .avatar:first-child {
+            margin-left: 0;
+        }
+
+        .highlight {
+            color: #ff6b35;
+        }
+
+        .challenges-description {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin: 20px 0 30px 0;
+        }
+
+        .challenge-features {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .leaderboard-card {
+            background: linear-gradient(135deg, #ff9a56 0%, #ff6b35 100%);
+            border-radius: 16px;
+            padding: 24px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .leaderboard-header {
+            margin-bottom: 20px;
+        }
+
+        .club-badge {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .leaderboard-item {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .rank {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ff6b35;
+            width: 40px;
+        }
+
+        .leaderboard-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .leaderboard-info {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .leaderboard-name {
+            font-weight: 600;
+            color: #000;
+            font-size: 15px;
+        }
+
+        .leaderboard-score {
+            color: #999;
+            font-size: 13px;
+        }
+
+        .tools-section {
+            padding: 80px 20px;
+            background-color: #f8f9fa;
+        }
+
+        .tools-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tools-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .tools-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+        }
+
+        .tools-description {
+            font-size: 16px;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 32px 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .tool-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .tool-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #000;
+        }
+
+        .tool-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1024px) {
+            .challenges-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .testimonials-section {
+            padding: 80px 20px;
+            background-color: #e8f4f8;
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .testimonials-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+        }
+
+        .testimonials-description {
+            font-size: 16px;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .featured-review {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .featured-review-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .featured-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-text {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .featured-quote {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #333;
+            font-style: italic;
+            margin-bottom: 24px;
+        }
+
+        .featured-author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .author-avatar-badge {
+            width: 48px;
+            height: 48px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .author-avatar-badge svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .author-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: #000;
+        }
+
+        .author-title {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .read-story-link {
+            color: #4169ff;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .read-story-link:hover {
+            color: #3155e6;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #333;
+            font-style: italic;
+            margin-bottom: 24px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+        }
+
+        .testimonial-name {
+            font-weight: 700;
+            font-size: 15px;
+            color: #000;
+        }
+
+        .testimonial-role {
+            font-size: 13px;
+            color: #999;
+        }
+
+        @media (max-width: 1024px) {
+            .featured-review-content {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-image {
+                height: 300px;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .cta-section {
+            padding: 100px 20px;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 24px;
+        }
+
+        .cta-description {
+            font-size: 17px;
+            color: #2c2b2b;
+            line-height: 1.7;
+            margin: 24px auto 40px;
+            max-width: 700px;
+        }
+
+        .cta-button-final {
+            background-color: #4169ff;
+            color: white;
+            padding: 18px 48px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cta-button-final:hover {
+            background-color: #3155e6;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(65, 105, 255, 0.3);
+        }
+
+        .footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 60px 20px 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 60px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #333;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .footer-tagline {
+            color: #edeaea;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #f1ebeb;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: #4169ff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #f2eeee;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-links {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <div class="logo-icon">h</div>
+            <span>Habit Tracker</span>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+            <li><a href="blog.html">Blog</a></li>
+        </ul>
+        
+       <div class="nav-buttons">
+    <button class="btn btn-signin" onclick="location.href='allhabits.html'">Sign In</button>
+    <button class="btn btn-signup"  onclick="location.href='allhabits.html'">Sign Up</button>
+</div>
+
+
+    </nav>
+
+    <section class="hero">
+        <h1>Build Better Habits,<br>Build a Better Life</h1>
+        <p class="subtitle">
+            Harness the power of our personalized habit tracker app to streamline your everyday routines and achieve your goals.
+        </p>
+        <button class="cta-button" onclick="location.href='allhabits.html'">Try Habitic Tracker Free</button>
+    </section>
+
+    <section class="schedule-section">
+        <div class="schedule-container">
+            <div class="schedule-header">
+                <svg class="check-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="28" stroke="#4169ff" stroke-width="4"/>
+                    <path d="M20 32L28 40L44 24" stroke="#4169ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2>Organize, Execute, Triumph</h2>
+                <p class="schedule-description">Start your day right with a clear, organized schedule that keeps you on track for success. Here's an example of how your day with Habitify could look:</p>
+            </div>
+
+            <div class="schedule-grid">
+                <div class="time-column morning">
+                    <div class="time-header">
+                        <svg class="time-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Morning
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Run</div>
+                        <div class="habit-time">8 AM</div>
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Meditate</div>
+                        <div class="habit-time">8:30 AM</div>
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Plan the day</div>
+                        <div class="habit-time">9 AM</div>
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Read</div>
+                        <div class="habit-time">10 AM</div>
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Hydrate</div>
+                        <div class="habit-time">9:30 AM</div>
+                    </div>
+                </div>
+
+                <div class="time-column noon">
+                    <div class="time-header">
+                        <svg class="time-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="5" stroke="white" stroke-width="2"/>
+                            <path d="M12 1v6m0 6v6M1 12h6m6 0h6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Noon
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Healthy Lunch</div>
+                        <div class="habit-time">12 PM</div>
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Connect with a colleague</div>
+                        <div class="habit-time">2 PM</div>
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Express gratitude</div>
+                        <div class="habit-time">4 PM</div>
+                    </div>
+                </div>
+
+                <div class="time-column night">
+                    <div class="time-header">
+                        <svg class="time-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Night
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Reflect</div>
+                        <div class="habit-time">8 PM</div>
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Wind Down</div>
+                        <div class="habit-time">9 PM</div>
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Disconnect from screens</div>
+                        <div class="habit-time">9:30 PM</div>
+                    </div>
+                    <div class="habit-card">
+                        <div class="habit-name">Prepare for tomorrow</div>
+                        <div class="habit-time">10 PM</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="progress-section">
+        <div class="progress-container">
+            <div class="progress-header">
+                <svg class="progress-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="8" y="40" width="10" height="16" fill="#4169ff" rx="2"/>
+                    <rect x="22" y="28" width="10" height="28" fill="#4169ff" rx="2"/>
+                    <rect x="36" y="16" width="10" height="40" fill="#4169ff" rx="2"/>
+                    <rect x="50" y="8" width="10" height="48" fill="#4169ff" rx="2"/>
+                </svg>
+                <h2>Stay Empowered by Your Progress</h2>
+                <p class="progress-description">Scientific studies show that tracking your progress can significantly boost your chances of successfully developing healthy habits. Fuel your journey with insightful metrics, celebrate your milestones, and stay motivated on your path to success.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card calendar-card">
+                    <h3>Jun 2023</h3>
+                    <div class="calendar-grid">
+                        <div class="day-label">MON</div>
+                        <div class="day-label">TUE</div>
+                        <div class="day-label">WED</div>
+                        <div class="day-label">THU</div>
+                        <div class="day-label">FRI</div>
+                        <div class="day-label">SAT</div>
+                        <div class="day-label">SUN</div>
+                        <div class="day-cell empty"></div>
+                        <div class="day-cell empty"></div>
+                        <div class="day-cell empty"></div>
+                        <div class="day-cell">1</div>
+                        <div class="day-cell active">2</div>
+                        <div class="day-cell">3</div>
+                        <div class="day-cell">4</div>
+                        <div class="day-cell active">5</div>
+                        <div class="day-cell active">6</div>
+                        <div class="day-cell active">7</div>
+                        <div class="day-cell active">8</div>
+                        <div class="day-cell active">9</div>
+                        <div class="day-cell active">10</div>
+                        <div class="day-cell">11</div>
+                        <div class="day-cell">12</div>
+                        <div class="day-cell">13</div>
+                        <div class="day-cell active">14</div>
+                        <div class="day-cell active">15</div>
+                        <div class="day-cell">16</div>
+                        <div class="day-cell">17</div>
+                        <div class="day-cell">18</div>
+                        <div class="day-cell">19</div>
+                        <div class="day-cell active">20</div>
+                        <div class="day-cell active">21</div>
+                        <div class="day-cell active">22</div>
+                        <div class="day-cell active">23</div>
+                        <div class="day-cell">24</div>
+                        <div class="day-cell">25</div>
+                        <div class="day-cell">26</div>
+                        <div class="day-cell">27</div>
+                        <div class="day-cell">28</div>
+                        <div class="day-cell">29</div>
+                        <div class="day-cell">30</div>
+                    </div>
+                </div>
+
+                <div class="stat-card streaks-card">
+                    <h3>Streaks</h3>
+                    <div class="streak-list">
+                        <div class="streak-item">
+                            <span class="streak-date">Dec 12 - July 8</span>
+                            <div class="streak-bar streak-long">
+                                <span class="streak-count">155</span>
+                            </div>
+                        </div>
+                        <div class="streak-item">
+                            <span class="streak-date">Dec 16 - July 8</span>
+                            <div class="streak-bar streak-medium">
+                                <span class="streak-count">56</span>
+                            </div>
+                        </div>
+                        <div class="streak-item">
+                            <span class="streak-date">Dec 16 - July 8</span>
+                            <div class="streak-bar streak-short">
+                                <span class="streak-count">23</span>
+                            </div>
+                        </div>
+                        <div class="streak-item">
+                            <span class="streak-date">Dec 1 - July 8</span>
+                            <div class="streak-bar streak-long">
+                                <span class="streak-count">15</span>
+                            </div>
+                        </div>
+                        <div class="streak-item">
+                            <span class="streak-date">Dec 12 - July 8</span>
+                            <div class="streak-bar streak-medium">
+                                <span class="streak-count">8</span>
+                            </div>
+                        </div>
+                        <div class="streak-item">
+                            <span class="streak-date">Dec 12 - July 8</span>
+                            <div class="streak-bar streak-long">
+                                <span class="streak-count">121</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card heatmap-card">
+                    <h3>2023</h3>
+                    <div class="heatmap">
+                        <div class="heatmap-row">
+                            <span class="month-label">JAN</span>
+                            <div class="heatmap-cells">
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                            </div>
+                        </div>
+                        <div class="heatmap-row">
+                            <span class="month-label">FEB</span>
+                            <div class="heatmap-cells">
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell active"></div>
+                            </div>
+                        </div>
+                        <div class="heatmap-row">
+                            <span class="month-label">MAR</span>
+                            <div class="heatmap-cells">
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                            </div>
+                        </div>
+                        <div class="heatmap-row">
+                            <span class="month-label">APR</span>
+                            <div class="heatmap-cells">
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                                <div class="heat-cell active"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <div class="chart-label">DAILY AVERAGE</div>
+                            <div class="chart-value">35 <span class="chart-unit">g</span></div>
+                        </div>
+                        <div class="chart-increase">▲ 50% vs Mon</div>
+                    </div>
+                    <div class="bar-chart">
+                        <div class="chart-bars">
+                            <div class="bar" style="height: 15%"></div>
+                            <div class="bar" style="height: 10%"></div>
+                            <div class="bar" style="height: 15%"></div>
+                            <div class="bar" style="height: 12%"></div>
+                            <div class="bar" style="height: 8%"></div>
+                            <div class="bar" style="height: 20%"></div>
+                            <div class="bar" style="height: 100%"></div>
+                        </div>
+                        <div class="chart-baseline"></div>
+                        <div class="chart-labels">
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+                            <span>Sun</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="challenges-section">
+        <div class="challenges-container">
+            <div class="challenges-content">
+                <div class="challenges-left">
+                    <div class="user-avatars">
+                        <img src="https://i.pravatar.cc/60?img=1" alt="User 1" class="avatar">
+                        <img src="https://i.pravatar.cc/60?img=2" alt="User 2" class="avatar">
+                        <img src="https://i.pravatar.cc/60?img=3" alt="User 3" class="avatar">
+                        <img src="https://i.pravatar.cc/60?img=4" alt="User 4" class="avatar">
+                    </div>
+                    <h2>Level Up the Fun with <span class="highlight">Challenges</span></h2>
+                    <p class="challenges-description">Engage in friendly competitions and participate in monthly challenges to make habit-building a more exhilarating journey.</p>
+                    
+                    <div class="challenge-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">🏆</span>
+                            <div>
+                                <strong>Challenge your Friends.</strong> Boost your habit-forming journey with a bit of friendly rivalry.
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📅</span>
+                            <div>
+                                <strong>Join Monthly Challenge.</strong> Climb the leaderboards, make habit formation fun and rewarding.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="challenges-right">
+                    <div class="leaderboard-card">
+                        <div class="leaderboard-header">
+                            <span class="club-badge">RUNNING CLUB</span>
+                        </div>
+                        <div class="leaderboard-list">
+                            <div class="leaderboard-item">
+                                <div class="rank">🔥 1</div>
+                                <img src="https://i.pravatar.cc/50?img=5" alt="David Dixon" class="leaderboard-avatar">
+                                <div class="leaderboard-info">
+                                    <div class="leaderboard-name">David Dixon</div>
+                                    <div class="leaderboard-score">54 KM</div>
+                                </div>
+                            </div>
+                            <div class="leaderboard-item">
+                                <div class="rank">🔥 2</div>
+                                <img src="https://i.pravatar.cc/50?img=6" alt="Adela Barmore" class="leaderboard-avatar">
+                                <div class="leaderboard-info">
+                                    <div class="leaderboard-name">Adela Barmore</div>
+                                    <div class="leaderboard-score">37.9 KM</div>
+                                </div>
+                            </div>
+                            <div class="leaderboard-item">
+                                <div class="rank">🔥 3</div>
+                                <img src="https://i.pravatar.cc/50?img=7" alt="Helen Judd" class="leaderboard-avatar">
+                                <div class="leaderboard-info">
+                                    <div class="leaderboard-name">Helen Judd</div>
+                                    <div class="leaderboard-score">32.1 KM</div>
+                                </div>
+                            </div>
+                            <div class="leaderboard-item">
+                                <div class="rank">🔥 4</div>
+                                <img src="https://i.pravatar.cc/50?img=8" alt="Dorothy Rodriguez" class="leaderboard-avatar">
+                                <div class="leaderboard-info">
+                                    <div class="leaderboard-name">Dorothy Rodriguez</div>
+                                    <div class="leaderboard-score">22 KM</div>
+                                </div>
+                            </div>
+                            <div class="leaderboard-item">
+                                <div class="rank">🔥 5</div>
+                                <img src="https://i.pravatar.cc/50?img=9" alt="Andres Runkle" class="leaderboard-avatar">
+                                <div class="leaderboard-info">
+                                    <div class="leaderboard-name">Andres Runkle</div>
+                                    <div class="leaderboard-score">18.5 KM</div>
+                                </div>
+                            </div>
+                            <div class="leaderboard-item">
+                                <div class="rank">🔥 6</div>
+                                <img src="https://i.pravatar.cc/50?img=10" alt="Bertha Muldoon" class="leaderboard-avatar">
+                                <div class="leaderboard-info">
+                                    <div class="leaderboard-name">Bertha Muldoon</div>
+                                    <div class="leaderboard-score">5 KM</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tools-section">
+        <div class="tools-container">
+            <div class="tools-header">
+               <img src="thunder-removebg-preview.png" alt="" width="60px">
+                <h2>Innovative Tools for Habit Mastery</h2>
+                <p class="tools-description">Unlock a world of possibilities with our comprehensive toolkit, designed to ensure your success in habit-building.</p>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">⏰</div>
+                    <h3>Built-in Timer</h3>
+                    <p>Our intuitive built-in timer helps you stay focused, improving your productivity and saving you valuable time.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">✏️</div>
+                    <h3>Built-in Notes</h3>
+                    <p>Capture and reflect on your thoughts, fostering self-awareness and enabling continuous growth.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">😊</div>
+                    <h3>Mood Tracking</h3>
+                    <p>Track your emotional health, understand its effects on your habits, and create a holistic approach to self-improvement.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🔒</div>
+                    <h3>Privacy Lock</h3>
+                    <p>Preserve your privacy with our secure system, safeguarding your personal habit data.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">❤️</div>
+                    <h3>Apple Health Sync</h3>
+                    <p>Synchronize your health data from Apple Health, achieving a comprehensive view of your wellness journey.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">🏃</div>
+                    <h3>Google Fit Sync</h3>
+                    <p>Seamlessly integrate with Google Fit, effortlessly tracking your fitness milestones.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">💻</div>
+                    <h3>API Access</h3>
+                    <p>Personalize your habit tracking experience with API Access, facilitating advanced customization.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">⚡</div>
+                    <h3>Zapier, IFTTT Connect</h3>
+                    <p>Link Habitify with your favorite apps, automating your habit tracking for a smooth, intuitive experience.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">📆</div>
+                    <h3>Apple Calendar Sync</h3>
+                    <p>Synchronize your habit schedule with Apple Calendar, facilitating effortless organization and planning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <div class="testimonials-header">
+                <img src="heart-removebg-preview.png" alt="" width="60px">
+                <h2>Proven Success Stories</h2>
+                <p class="testimonials-description">Habitify isn't just loved by our users - we've also been recognized by industry leaders. Featured as the App of the Day on the Apple App Store, we're committed to delivering quality, effectiveness, and a platform for genuine transformation.</p>
+            </div>
+
+            <div class="featured-review">
+                <div class="featured-review-content">
+                    <div class="featured-image">
+                        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=400&fit=crop" alt="Habitify App Interface">
+                    </div>
+                    <div class="featured-text">
+                        <p class="featured-quote">"Habit Tracker isn't about the bells and whistles. Its aim is to cut through the noise to concentrate your mind. The interface is simple and organized, with all your habits presented in a calendar and ordered chronologically, so you can see your day measured out in goals."</p>
+                        <div class="featured-author">
+                            <div class="author-avatar-badge">
+                                <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                                </svg>
+                            </div>
+                            <div class="author-info">
+                                <div class="author-name">App Store Editors</div>
+                                <div class="author-title">App Of The Day</div>
+                            </div>
+                        </div>
+                        <a href="aboutus.html" class="read-story-link">Read Story →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Before Habit Tracker, I struggled with managing my time effectively and often felt overwhelmed. But the app has helped me create a well-structured routine and stick to it. I've improved my productivity, and I feel more balanced and in control. It's made a big difference in both my professional and personal life."</p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/60?img=11" alt="Jennifer Ellison" class="testimonial-avatar">
+                        <div>
+                            <div class="testimonial-name">Jennifer Ellison</div>
+                            <div class="testimonial-role">Product Manager</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Habit Tracker is a game-changer for me. I've been able to set fitness goals and maintain consistency, all while tracking my progress. The app not only tracks my habits but also motivates me to keep going. Now, I've achieved my fitness goals faster than I ever thought possible."</p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/60?img=12" alt="Thomas Maxwell" class="testimonial-avatar">
+                        <div>
+                            <div class="testimonial-name">Thomas Maxwell</div>
+                            <div class="testimonial-role">Fitness Enthusiast</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"As an entrepreneur, my days are extremely busy. Habit Tracker has helped me create a daily routine that keeps me grounded, focused, and productive. I love the built-in timer and the ability to track my moods, which has improved my work-life balance significantly."</p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/60?img=13" alt="John McLemore" class="testimonial-avatar">
+                        <div>
+                            <div class="testimonial-name">John McLemore</div>
+                            <div class="testimonial-role">Entrepreneur</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"I was having trouble balancing my studies, part-time job, and personal life. Habit Tracker helped me organize my day better, kept me motivated, and turned my life around. My grades have improved, and I still find time for self-care."</p>
+                    <div class="testimonial-author">
+                        <img src="https://i.pravatar.cc/60?img=14" alt="Carol Harrison" class="testimonial-avatar">
+                        <div>
+                            <div class="testimonial-name">Carol Harrison</div>
+                            <div class="testimonial-role">Student</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-container">
+            <img src="cup.png" alt="cup" width="60px">
+            <h2>Why Wait to<br>Transform Your Life?</h2>
+            <p class="cta-description">Join over 2 million people who are taking control of their habits and building a better life with Habit Tracker. Whether your aim is to enhance productivity, improve fitness, or simply form healthier daily habits, Habitify has everything you need to make it happen.</p>
+            <button class="cta-button-final"  onclick="location.href='allhabits.html'">Try for Free</button>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon">h</div>
+                        <span>Habit Tracker</span>
+                    </div>
+                    <p class="footer-tagline">Build Better Habits, Build a Better Life</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="index.html">Try for free</a>
+                        <a href="#"></a>
+                        <a href="#"></a>
+                        <a href="blog.html">Blog</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="aboutus.html">About Us</a>
+                        <a href="#">Blog</a>
+                        <a href="#"></a>
+                        <a href="contactus.html">Contact</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="contactus.html">Contact Us</a>
+                        <a href=""></a>
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="termsofservice.html">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Habit Tracker. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

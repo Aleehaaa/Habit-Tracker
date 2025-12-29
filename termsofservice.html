@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Habit Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #4169ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #4169ff;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-signin {
+            background-color: transparent;
+            color: #333;
+        }
+
+        .btn-signin:hover {
+            background-color: #f0f0f0;
+        }
+
+        .btn-signup {
+            background-color: #4169ff;
+            color: white;
+        }
+
+        .btn-signup:hover {
+            background-color: #3155e6;
+            transform: translateY(-2px);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #2150fa 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        .last-updated {
+            margin-top: 12px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .terms-container {
+            max-width: 900px;
+            margin: -60px auto 80px;
+            background: white;
+            border-radius: 16px;
+            padding: 60px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .terms-section {
+            margin-bottom: 48px;
+        }
+
+        .terms-section h2 {
+            font-size: 28px;
+            color: #000;
+            margin-bottom: 20px;
+            font-weight: 700;
+            padding-top: 20px;
+        }
+
+        .terms-section h3 {
+            font-size: 20px;
+            color: #333;
+            margin: 24px 0 12px;
+            font-weight: 600;
+        }
+
+        .terms-section p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 16px;
+        }
+
+        .terms-section ul, .terms-section ol {
+            margin: 16px 0 16px 24px;
+            line-height: 1.8;
+        }
+
+        .terms-section li {
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 24px 0;
+            border-radius: 8px;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: #856404;
+        }
+
+        .contact-box {
+            background: #e8f4fd;
+            border-left: 4px solid #4169ff;
+            padding: 24px;
+            margin: 40px 0;
+            border-radius: 8px;
+        }
+
+        .contact-box h3 {
+            color: #4169ff;
+            margin-bottom: 12px;
+        }
+
+        .contact-box p {
+            color: #333;
+            margin: 0;
+        }
+
+        .contact-box a {
+            color: #4169ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 60px 20px 30px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 60px;
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #333;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 16px;
+            color: #e8f4fd;
+        }
+
+        .footer-tagline {
+            color: #999;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: #4169ff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .terms-container {
+                padding: 40px 30px;
+                margin: -40px 20px 60px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-links {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">h</div>
+            <span>Habit Tracker</span>
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contactus.html">Contact Us</a></li>
+        </ul>
+        
+        <div class="nav-buttons">
+            <button class="btn btn-signin" onclick="location.href='allhabits.html'">Sign In</button>
+            <button class="btn btn-signup" onclick="location.href='allhabits.html'">Sign Up</button>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Terms of Service</h1>
+            <p>Please read these terms carefully before using Habitify</p>
+            <p class="last-updated">Last Updated: December 5, 2024</p>
+        </div>
+    </section>
+
+    <div class="terms-container">
+        <div class="terms-section" id="acceptance">
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing and using Habitify ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these Terms of Service, please do not use the Service.</p>
+            <p>These terms apply to all visitors, users, and others who access or use the Service.</p>
+        </div>
+
+        <div class="terms-section" id="description">
+            <h2>2. Description of Service</h2>
+            <p>Habitify is a habit tracking application that helps users build better habits and improve their daily routines. The Service includes:</p>
+            <ul>
+                <li>Habit tracking and monitoring tools</li>
+                <li>Progress analytics and reporting</li>
+                <li>Reminders and notifications</li>
+                <li>Social features and challenges</li>
+                <li>Integration with third-party health apps</li>
+                <li>Cloud synchronization across devices</li>
+            </ul>
+        </div>
+
+        <div class="terms-section" id="registration">
+            <h2>3. User Registration</h2>
+            <h3>3.1 Account Creation</h3>
+            <p>To use certain features of the Service, you must register for an account. When you register, you agree to:</p>
+            <ul>
+                <li>Provide accurate, current, and complete information</li>
+                <li>Maintain and promptly update your account information</li>
+                <li>Maintain the security of your password</li>
+                <li>Accept responsibility for all activities under your account</li>
+                <li>Notify us immediately of any unauthorized use</li>
+            </ul>
+            
+            <h3>3.2 Age Requirement</h3>
+            <p>You must be at least 13 years old to use the Service. If you are under 18, you must have permission from a parent or guardian.</p>
+        </div>
+
+        <div class="terms-section" id="usage">
+            <h2>4. Acceptable Use</h2>
+            <p>You agree not to use the Service to:</p>
+            <ol>
+                <li>Violate any applicable laws or regulations</li>
+                <li>Infringe on the rights of others</li>
+                <li>Transmit harmful or malicious code</li>
+                <li>Attempt to gain unauthorized access to the Service</li>
+                <li>Interfere with the proper functioning of the Service</li>
+                <li>Use the Service for any commercial purpose without permission</li>
+                <li>Collect or harvest information about other users</li>
+                <li>Impersonate any person or entity</li>
+            </ol>
+            
+            <div class="highlight-box">
+                <p><strong>Important:</strong> Violation of these terms may result in immediate termination of your account and possible legal action.</p>
+            </div>
+        </div>
+
+        <div class="terms-section" id="privacy">
+            <h2>5. Privacy and Data</h2>
+            <p>Your privacy is important to us. Our Privacy Policy explains how we collect, use, and protect your personal information. By using the Service, you consent to our collection and use of your data as described in our Privacy Policy.</p>
+            
+            <h3>5.1 Data Storage</h3>
+            <p>We store your habit data securely in the cloud. You retain ownership of your data and can export or delete it at any time.</p>
+            
+            <h3>5.2 Third-Party Integrations</h3>
+            <p>If you connect third-party services (like Apple Health or Google Fit), you authorize us to access and use data from those services in accordance with their terms and our Privacy Policy.</p>
+        </div>
+
+        <div class="terms-section" id="subscription">
+            <h2>6. Subscription and Payment</h2>
+            <h3>6.1 Free and Premium Plans</h3>
+            <p>Habitify offers both free and premium subscription plans. Premium features include advanced analytics, unlimited habits, custom reminders, and priority support.</p>
+            
+            <h3>6.2 Billing</h3>
+            <p>Premium subscriptions are billed on a recurring basis (monthly or annually). You authorize us to charge your payment method on each billing cycle.</p>
+            
+            <h3>6.3 Cancellation and Refunds</h3>
+            <p>You may cancel your subscription at any time. Cancellations take effect at the end of the current billing period. We offer a 14-day money-back guarantee for annual subscriptions.</p>
+            
+            <h3>6.4 Price Changes</h3>
+            <p>We reserve the right to change our pricing with 30 days' notice. Price changes will not affect your current billing cycle.</p>
+        </div>
+
+        <div class="terms-section" id="intellectual">
+            <h2>7. Intellectual Property</h2>
+            <p>The Service and its original content, features, and functionality are owned by Habitify and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.</p>
+            
+            <h3>7.1 Your Content</h3>
+            <p>You retain ownership of any content you create or upload to the Service. By using the Service, you grant us a license to use, display, and distribute your content solely for the purpose of providing and improving the Service.</p>
+            
+            <h3>7.2 Feedback</h3>
+            <p>If you provide us with feedback or suggestions, we may use them without any obligation to you.</p>
+        </div>
+
+        <div class="terms-section" id="termination">
+            <h2>8. Termination</h2>
+            <p>We may terminate or suspend your account and access to the Service immediately, without prior notice, for any reason, including breach of these Terms.</p>
+            
+            <p>Upon termination, your right to use the Service will immediately cease. If you wish to terminate your account, you may do so through your account settings or by contacting us.</p>
+            
+            <p>All provisions of the Terms which by their nature should survive termination shall survive, including ownership provisions, warranty disclaimers, and limitations of liability.</p>
+        </div>
+
+        <div class="terms-section" id="disclaimer">
+            <h2>9. Disclaimer of Warranties</h2>
+            <p>The Service is provided "AS IS" and "AS AVAILABLE" without warranties of any kind, either express or implied, including but not limited to:</p>
+            <ul>
+                <li>Warranties of merchantability</li>
+                <li>Fitness for a particular purpose</li>
+                <li>Non-infringement</li>
+                <li>Accuracy, reliability, or completeness of content</li>
+            </ul>
+            
+            <div class="highlight-box">
+                <p><strong>Health Disclaimer:</strong> Habitify is not a medical device or healthcare service. Consult with healthcare professionals before making significant lifestyle changes.</p>
+            </div>
+        </div>
+
+        <div class="terms-section" id="limitation">
+            <h2>10. Limitation of Liability</h2>
+            <p>To the maximum extent permitted by law, Habitify shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, whether incurred directly or indirectly, or any loss of data, use, goodwill, or other intangible losses resulting from:</p>
+            <ol>
+                <li>Your access to or use of or inability to access or use the Service</li>
+                <li>Any conduct or content of any third party on the Service</li>
+                <li>Any content obtained from the Service</li>
+                <li>Unauthorized access, use, or alteration of your data</li>
+            </ol>
+        </div>
+
+        <div class="terms-section" id="changes">
+            <h2>11. Changes to Terms</h2>
+            <p>We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect.</p>
+            
+            <p>By continuing to access or use the Service after revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, you must stop using the Service.</p>
+        </div>
+
+        <div class="terms-section" id="contact">
+            <h2>12. Contact Information</h2>
+            <div class="contact-box">
+                <h3>Questions About These Terms?</h3>
+                <p>If you have any questions about these Terms of Service, please contact us:</p>
+                <p style="margin-top: 12px;">
+                    <strong>Email:</strong>    legal@habitTracker123.me</a><br>
+                    <strong>Address:</strong> 123 Habit Street, CA 94102<br>
+                    <strong>Support:</strong> support@habitTracker.me</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="terms-section">
+            <p style="text-align: center; color: #999; font-size: 14px; margin-top: 40px;">
+                © 2025 Habitify. All rights reserved.
+            </p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <div class="logo-icon">h</div>
+                        <span>Habit Tracker</span>
+                    </a>
+                    <p class="footer-tagline">Build Better Habits, Build a Better Life</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Product</h4>
+                        <a href="allhabits.html">Try for free</a>
+                        <a href="#"></a>
+                        <a href="blog.html">Blog</a>
+                        <a href="#"></a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <a href="aboutus.html">About Us</a>
+                        <a href="blog.html">Blog</a>
+                        <a href="#"></a>
+                        <a href="contactus.html">Contact</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="contactus.html">Contact Us</a>
+        
+                        <a href="privacy.html">Privacy Policy</a>
+                        <a href="termsofservice.html">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Habit Tracker. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
